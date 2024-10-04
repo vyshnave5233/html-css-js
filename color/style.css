@@ -1,0 +1,51 @@
+/*-------------------- CSS --------------------*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-width: 100vh;
+}
+.header {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: #000000;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    margin: 30px;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.color {
+    width: 200px;
+    height: 150px;
+    border-radius: 3px;
+    background: red;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    position: relative;
+    cursor: pointer;
+}
+
+.color .hex-code {
+    position: absolute;
+    color: white;
+    padding: 3px;
+    background: #0002;
+    left: 0;
+    bottom: 0;
+    opacity: 0.3;
+    text-transform: uppercase;
+}
+.color:hover .hex-code {
+    opacity: 1;
+}
