@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cursor Following Dragon</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background-color: #1a1a1a;
+    }
+    svg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+  </style>
+</head>
+<body>
+  <svg id="canvas"></svg>
+
+  <script>
+    const N = 15; // Number of dragon segments
+    const rad = 0.5;
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    const elems = []; // Array to hold dragon segments
+    let frm = 0;
+
+    // Create dragon elements
+    const svg = document.getElementById('canvas');
+    for (let i = 0; i < N; i++) {
+      const use = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      use.setAttribute("r", 10 - i * 0.5); // Decrease size for tail effect
+      use.setAttribute("fill", `hsl(${i * 20}, 100%, 50%)`);
+      svg.appendChild(use);
+      elems.push({ x: width / 2, y: height / 2, use });
+    }
+
+    // Pointer object to track cursor position
+    const pointer = { x: width / 2, y: height / 2 };
+    document.addEventListener("mousemove", (event) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+    });
+
+    // Animation function
+    const run = () => {
+      requestAnimationFrame(run);
+      frm += 0.02;
+
+      let e = elems[0];
+      const ax = (Math.cos(3 * frm) * rad * width) / height;
+      const ay = (Math.sin(4 * frm) * rad * height) / width;
+
+      e.x += (ax + pointer.x - e.x) / 10;
+      e.y += (ay + pointer.y - e.y) / 10;
+
+      for (let i = 1; i < N; i++) {
+        let e = elems[i];
+        let ep = elems[i - 1];
+        const a = Math.atan2(e.y - ep.y, e.x - ep.x);
+
+        e.x += (ep.x - e.x + Math.cos(a) * (100 - i) / 5) / 4;
+        e.y += (ep.y - e.y + Math.sin(a) * (100 - i) / 5) / 4;
+
+        const s = (162 + 4 * (1 - i)) / 50;
+        e.use.setAttribute(
+          "transform",
+          `translate(${(ep.x + e.x) / 2}, ${(ep.y + e.y) / 2}) 
+           rotate(${(180 / Math.PI) * a}) 
+           scale(${s}, ${s})`
+        );
+      }
+    };
+
+    run(); // Start animation
+  </script>
+</body>
+</html>
