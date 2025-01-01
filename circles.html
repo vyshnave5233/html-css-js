@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spinning Circles and Claws</title>
+  <style>
+    :root {
+      --speed: 1.35s;
+      --circle-count: 10;
+      --claw-count: 30;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    body {
+      background-color: #140032;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .circles {
+      position: relative;
+      width: 300px;
+      height: 300px;
+      animation: rotateCircles var(--speed) linear infinite;
+    }
+
+    @keyframes rotateCircles {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .circle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: center;
+      width: 300px;
+      height: 300px;
+      animation: Claws var(--speed) linear infinite;
+    }
+
+    @keyframes Claws {
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+
+    .claw {
+      position: absolute;
+      top: 0;
+      left: 50%;
+      width: 300px;
+      height: 150px;
+      border-right: 5px solid;
+      border-radius: 20%;
+      transform-origin: 0 50%;
+    }
+  </style>
+</head>
+<body>
+  <div class="circles"></div>
+  <script>
+    const circlesContainer = document.querySelector('.circles');
+    const circleCount = 10;
+    const clawCount = 30;
+
+    // Create circles
+    for (let i = 0; i < circleCount; i++) {
+      const circle = document.createElement('div');
+      circle.classList.add('circle');
+      circle.style.transform = `rotate(${(i * 360) / circleCount}deg) translate(150px)`;
+
+      // Create claws for each circle
+      for (let j = 0; j < clawCount; j++) {
+        const claw = document.createElement('div');
+        claw.classList.add('claw');
+        claw.style.borderColor = `hsla(${(j * 50) / clawCount}, 100%, 50%, 1)`;
+        claw.style.transform = `scale(${(j + 1) / clawCount}) rotate(${(j * 360) / clawCount}deg) translate(-300px)`;
+        circle.appendChild(claw);
+      }
+
+      circlesContainer.appendChild(circle);
+    }
+  </script>
+</body>
+</html>

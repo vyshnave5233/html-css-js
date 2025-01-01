@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Splash Image</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #f0f0f0; /* Optional background color */
+        }
+
+        .image-container {
+            position: relative;
+            height: 80vh;
+            width: 60%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .image1, .image2 {
+            position: absolute;
+            height: 100%;
+            width: 100%;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .image1 {
+            background-image: url('./images/login-bg.png');
+        }
+
+        .image2 {
+            background-image: url('./images/splash.jpg');
+            mix-blend-mode: screen;
+        }
+
+        @media (max-width: 768px) {
+            .image-container {
+                width: 100vh;
+                height: 60vh;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="image-container">
+        <div class="image1"></div>
+        <div class="image2"></div>
+    </div>
+</body>
+</html>
